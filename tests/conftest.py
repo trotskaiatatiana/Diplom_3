@@ -4,7 +4,6 @@ import pytest
 from selenium import webdriver
 from pages.login_page import LoginPage
 from urls import Urls
-from selenium.common.exceptions import ElementClickInterceptedException
 
 
 @pytest.fixture(params=["chrome", "firefox"])
@@ -60,17 +59,18 @@ def authorized_user(driver, created_user):
     response.raise_for_status()
 
     tokens = response.json()
+    login_page = LoginPage(driver)
 
-    driver.execute_script(
+    login_page.execute_script(
         "window.localStorage.setItem('accessToken', arguments[0]);",
         tokens["accessToken"]
     )
-    driver.execute_script(
+    login_page.execute_script(
         "window.localStorage.setItem('refreshToken', arguments[0]);",
         tokens["refreshToken"]
     )
 
-    driver.refresh()
+    login_page.refresh_page()
 
     return user_data
 

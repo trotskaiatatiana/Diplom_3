@@ -1,9 +1,6 @@
-
 import allure
 from pages.base_page import BasePage
 from locators.order_feed_locators import OrderFeedLocators
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class OrderFeedPage(BasePage):
@@ -20,14 +17,11 @@ class OrderFeedPage(BasePage):
     def get_orders_in_progress(self):
         return self.get_text(OrderFeedLocators.ORDERS_IN_PROGRESS)
 
-    
     @allure.step("Дождаться появления номера заказа в работе")
     def wait_for_order_in_progress(self, order_number):
-        expected_number = order_number.zfill(4)
+        expected_number = str(order_number).zfill(5)
 
-        WebDriverWait(self.driver, 30).until(
-            lambda driver: expected_number in (
-                self.get_orders_in_progress().splitlines()
-            )
+        return self.wait_for_text_in_element(
+            OrderFeedLocators.ORDERS_IN_PROGRESS,
+            expected_number
         )
-

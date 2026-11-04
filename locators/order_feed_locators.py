@@ -14,6 +14,7 @@ class OrderFeedLocators:
     )
 
     ORDERS_IN_PROGRESS = (
-        By.XPATH,
-        "//p[text()='В работе:']/following-sibling::ul[1]"
+        By.CSS_SELECTOR,
+        "ul[class*='OrderFeed_orderListReady__']"
     )
+    
