@@ -16,7 +16,7 @@ class TestMainPage:
         main_page.open_order_feed()
 
         with allure.step("Проверить переход в ленту заказов"):
-            assert driver.current_url == Urls.ORDER_FEED_PAGE
+            assert main_page.get_current_url() == Urls.ORDER_FEED_PAGE
 
     @allure.title("Переход в конструктор")
     def test_open_constructor(self, driver):
@@ -26,7 +26,7 @@ class TestMainPage:
         main_page.open_constructor()
 
         with allure.step("Проверить переход в конструктор"):
-            assert driver.current_url.rstrip("/") == Urls.MAIN_PAGE.rstrip("/")
+            assert main_page.get_current_url().rstrip("/") == Urls.MAIN_PAGE.rstrip("/")
 
     
     @allure.title("Открытие модального окна ингредиента")
